@@ -1,0 +1,11 @@
+# This file composes the different playbooks and hosts.
+---
+- hosts: nginx
+  become: true
+  gather_facts: false
+  vars_files:
+    - vars/default.yml
+
+  tasks:
+    - name: Configure Nginx Server
+      include_tasks: ./plays/nginx.yml

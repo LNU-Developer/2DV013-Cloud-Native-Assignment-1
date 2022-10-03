@@ -1,0 +1,26 @@
+- name: Install Nginx
+  apt: name=nginx update_cache=yes state=latest force_apt_get=yes
+
+- name: Copy the index.html to a default value
+  copy:
+    remote_src: True
+    src: /var/www/html/index.nginx-debian.html
+    dest: /var/www/html/index.nginx-debian.html.default
+
+- name: Copy the index.html file
+  copy:
+    src: ./files/index.html
+    dest: /var/www/html/index.html
+
+- name: Disable the default site
+  file:
+    path: "/etc/nginx/sites-enabled/default"
+    state: absent
+
+- name: Copy new nginx config file
+  copy:
+    src: ./files/nginx.conf.j2
+    dest: /etc/nginx/conf.d/default.conf
+
+- name: Restart nginx
+  service: name=nginx state=restarted
