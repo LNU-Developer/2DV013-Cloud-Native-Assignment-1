@@ -6,7 +6,7 @@ variable "subnetwork_cidr" {
 
 variable "key_name" {
   type    = string
-  default = "mykey"
+  default = ""
 }
 
 variable "identity_file" {
